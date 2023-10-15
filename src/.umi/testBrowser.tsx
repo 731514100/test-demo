@@ -3,13 +3,12 @@
 // DO NOT CHANGE IT MANUALLY!
 import React, { useEffect, useState } from 'react';
 import { ApplyPluginsType } from 'umi';
-import { renderClient, RenderClientOpts } from 'D:/self/demo/react/umi/testDemo/node_modules/@umijs/renderer-react';
+import { renderClient, RenderClientOpts } from 'D:/lh/github/test-demo/node_modules/.pnpm/@umijs+renderer-react@4.0.86_react-dom@18.1.0_react@18.1.0/node_modules/@umijs/renderer-react';
 import { createHistory } from './core/history';
 import { createPluginManager } from './core/plugin';
 import { getRoutes } from './core/route';
 import type { Location } from 'history';
 
-import './core/polyfill';
 import 'antd/dist/antd.less';
 const publicPath = '/';
 const runtimePublicPath = false;

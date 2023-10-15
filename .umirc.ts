@@ -15,9 +15,14 @@ export default defineConfig({
       redirect: '/home',
     },
     {
-      name: '首页',
+      name: '机器人移动',
       path: '/home',
       component: './Home',
+    },
+    {
+      name: '红包雨功能',
+      path: '/redEnvelopeRain',
+      component: './RedEnvelopeRain',
     },
     {
       name: '权限演示',

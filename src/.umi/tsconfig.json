@@ -2,8 +2,16 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "noEmit": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "sourceMap": true,
@@ -19,7 +27,7 @@
         "src/.umi/*"
       ],
       "@umijs/max": [
-        "D:\\self\\demo\\react\\umi\\testDemo\\node_modules\\umi"
+        "D:\\lh\\github\\test-demo\\node_modules\\.pnpm\\umi@4.0.86_@babel+core@7.23.2_@types+react@18.2.28_eslint@8.35.0_postcss@8.4.31_prettier@2.8._fgsaqytjrgw3t4vr5nicwowu3u\\node_modules\\umi"
       ],
       "@umijs/max/typings": [
         "src/.umi/typings"

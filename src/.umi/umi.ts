@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 import './core/polyfill';
 import 'antd/dist/antd.less';
-import { renderClient } from 'D:/self/demo/react/umi/testDemo/node_modules/@umijs/renderer-react';
+import { renderClient } from 'D:/lh/github/test-demo/node_modules/.pnpm/@umijs+renderer-react@4.0.86_react-dom@18.1.0_react@18.1.0/node_modules/@umijs/renderer-react';
 import { getRoutes } from './core/route';
 import { createPluginManager } from './core/plugin';
 import { createHistory } from './core/history';
@@ -27,16 +27,25 @@ async function render() {
     },
   });
 
+  const contextOpts = pluginManager.applyPlugins({
+    key: 'modifyContextOpts',
+    type: ApplyPluginsType.modify,
+    initialValue: {},
+  });
+
+  const basename = contextOpts.basename || '/';
+  const historyType = contextOpts.historyType || 'browser';
+
+  const history = createHistory({
+    type: historyType,
+    basename,
+    ...contextOpts.historyOpts,
+  });
+
   return (pluginManager.applyPlugins({
     key: 'render',
     type: ApplyPluginsType.compose,
     initialValue() {
-      const contextOpts = pluginManager.applyPlugins({
-        key: 'modifyContextOpts',
-        type: ApplyPluginsType.modify,
-        initialValue: {},
-      });
-      const basename = contextOpts.basename || '/';
       const context = {
         routes,
         routeComponents,
@@ -44,11 +53,8 @@ async function render() {
         rootElement: contextOpts.rootElement || document.getElementById('root'),
         publicPath,
         runtimePublicPath,
-        history: createHistory({
-          type: contextOpts.historyType || 'browser',
-          basename,
-          ...contextOpts.historyOpts,
-        }),
+        history,
+        historyType,
         basename,
         callback: contextOpts.callback,
       };
@@ -66,5 +72,5 @@ async function render() {
 render();
 
 window.g_umi = {
-  version: '4.0.34',
+  version: '4.0.86',
 };
