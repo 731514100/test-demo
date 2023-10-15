@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 import React from 'react';
 import { Avatar, version, Dropdown, Menu, Spin } from 'antd';
-import { LogoutOutlined } from 'D:/lh/github/test-demo/node_modules/.pnpm/@ant-design+icons@4.8.1_react-dom@18.2.0_react@18.2.0/node_modules/@ant-design/icons';
+import { LogoutOutlined } from 'D:/lh/github/test-demo/node_modules/.pnpm/@ant-design+icons@4.8.1_react-dom@18.2.0_react@18.1.0/node_modules/@ant-design/icons';
 
 export function getRightRenderContent (opts: {
    runtimeConfig: any,

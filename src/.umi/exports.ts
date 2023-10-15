@@ -7,7 +7,7 @@ export type { RuntimeConfig } from './core/defineApp'
 export { createBrowserHistory, createHashHistory, createMemoryHistory, Helmet, HelmetProvider, createSearchParams, generatePath, matchPath, matchRoutes, Navigate, NavLink, Outlet, resolvePath, useLocation, useMatch, useNavigate, useOutlet, useOutletContext, useParams, useResolvedPath, useRoutes, useSearchParams, useAppData, useClientLoaderData, useRouteProps, useSelectedRoutes, useServerLoaderData, renderClient, __getRoot, Link, useRouteData, __useFetcher, withRouter } from 'D:/lh/github/test-demo/node_modules/.pnpm/@umijs+renderer-react@4.0.86_react-dom@18.1.0_react@18.1.0/node_modules/@umijs/renderer-react';
 export type {  History } from 'D:/lh/github/test-demo/node_modules/.pnpm/@umijs+renderer-react@4.0.86_react-dom@18.1.0_react@18.1.0/node_modules/@umijs/renderer-react'
 // umi/client/client/plugin
-export { ApplyPluginsType, PluginManager } from 'D:/lh/github/test-demo/node_modules/.pnpm/umi@4.0.86_@babel+core@7.23.2_@types+react@18.2.28_eslint@8.35.0_postcss@8.4.31_prettier@2.8._fgsaqytjrgw3t4vr5nicwowu3u/node_modules/umi/client/client/plugin.js';
+export { ApplyPluginsType, PluginManager } from 'D:/lh/github/test-demo/node_modules/.pnpm/umi@4.0.86_@babel+core@7.23.2_@types+react@18.2.28_eslint@8.35.0_postcss@8.4.31_prettier@2.8._nofmoycdhodhl3zayelubllxli/node_modules/umi/client/client/plugin.js';
 export { history, createHistory } from './core/history';
 export { terminal } from './core/terminal';
 export { TestBrowser } from './testBrowser';

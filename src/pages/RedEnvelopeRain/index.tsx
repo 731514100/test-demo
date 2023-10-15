@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // import './index.css';
-import money1 from '@/assets/images/picture.png';
-import money2 from '@/assets/images/picture2.jpg';
-import money3 from '@/assets/images/picture3.jpg';
+import moneyx from '@/assets/images/RedEnvelopeRain/ball1.png';
+import money1 from '@/assets/images/RedEnvelopeRain/money1.webp';
+import money2 from '@/assets/images/pointCon/机器人.png';
+import money3 from '@/assets/images/pointCon/无人机.png';
 import {
   loadImage,
   positionX,
@@ -20,10 +21,10 @@ const config = {
     // image height
     h: 50,
     // image rotate value area
-    randomLimit: [0.8, 1] as minMax,
+    randomLimit: [0.5, 1] as minMax,
   },
   // image number max show
-  numberMaxLimit: 100,
+  numberMaxLimit: 200,
 };
 const { speedLimit, imgInfo, numberMaxLimit, density } = config;
 
@@ -42,17 +43,13 @@ export default class CanvasCom extends Component {
 
   clearTime: any = null;
   img: any = [];
+  loadingImageArr = [money1, moneyx, money2, money3]
 
   componentDidMount() {
     this.loadingImg();
   }
   loadingImg() {
-    Promise.all([
-      loadImage(money1),
-      loadImage(money2),
-      loadImage(money3),
-      // loadImage(money4.src),
-    ]).then((res) => {
+    Promise.all(this.loadingImageArr.map(v => loadImage(v))).then((res) => {
       this.img = res;
       this.wid = window.innerWidth;
       this.hei = window.innerHeight;
@@ -86,7 +83,7 @@ export default class CanvasCom extends Component {
     return {
       x: positionX(),
       y: 0,
-      img: this.img[Math.floor(randomRange(0, 3))],
+      img: this.img[Math.floor(randomRange(0, this.loadingImageArr.length ))],
       // rotate
       rotate: randomRange(-45, 45),
       direction: Math.random(),
@@ -153,7 +150,7 @@ export default class CanvasCom extends Component {
 
   render() {
     return (
-      <div style={{ position: 'absolute', left: 0, top: 0 }}>
+      <div style={{ position: 'absolute', left: 0, top: 0, background: '#000' }}>
         <canvas id="canvas"></canvas>
       </div>
     );
