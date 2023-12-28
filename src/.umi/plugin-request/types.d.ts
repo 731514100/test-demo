@@ -7,6 +7,4 @@ export type {
   AxiosResponse,
   AxiosError,
   RequestError,
-  ResponseInterceptor,
-  RequestOptions,
-  Request } from './request';
+  ResponseInterceptor } from './request';

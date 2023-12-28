@@ -25,6 +25,11 @@ export default defineConfig({
       component: './RedEnvelopeRain',
     },
     {
+      name: '按钮之彩带特效',
+      path: '/colouredRibbonAnimation',
+      component: './ColouredRibbonAnimation',
+    },
+    {
       name: '权限演示',
       path: '/access',
       component: './Access',

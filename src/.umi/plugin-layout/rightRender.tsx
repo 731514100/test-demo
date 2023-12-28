@@ -3,7 +3,7 @@
 // DO NOT CHANGE IT MANUALLY!
 import React from 'react';
 import { Avatar, version, Dropdown, Menu, Spin } from 'antd';
-import { LogoutOutlined } from 'D:/lh/github/test-demo/node_modules/.pnpm/@ant-design+icons@4.8.1_react-dom@18.2.0_react@18.1.0/node_modules/@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 
 export function getRightRenderContent (opts: {
    runtimeConfig: any,
@@ -19,6 +19,7 @@ export function getRightRenderContent (opts: {
     );
   }
 
+ 
 
   const avatar = (
     <span className="umi-plugin-layout-action">
@@ -61,26 +62,12 @@ export function getRightRenderContent (opts: {
       },
     ],
   };
+  
   // antd@5 和  4.24 之后推荐使用 menu，性能更好
-  let dropdownProps;
-  if (version.startsWith("5.") || version.startsWith("4.24.")) {
-    dropdownProps = { menu: langMenu };
-  } else if (version.startsWith("3.")) {
-    dropdownProps = {
-      overlay: (
-        <Menu>
-          {langMenu.items.map((item) => (
-            <Menu.Item key={item.key} onClick={item.onClick}>
-              {item.label}
-            </Menu.Item>
-          ))}
-        </Menu>
-      ),
-    };
-  } else { // 需要 antd 4.20.0 以上版本
-    dropdownProps = { overlay: <Menu {...langMenu} /> };
-  }
-
+  const dropdownProps =
+    version.startsWith("5.") || version.startsWith("4.24.")
+      ? { menu: langMenu }
+      : { overlay: <Menu {...langMenu} /> };  
 
   return (
     <div className="umi-plugin-layout-right anticon">
