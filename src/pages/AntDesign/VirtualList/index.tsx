@@ -1,5 +1,5 @@
 import { Checkbox, Button, Popover } from 'antd';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import LhVirtualTable from './components/LhVirtualTable'
 import styles from './index.less'
 // @ts-ignore
@@ -17,13 +17,13 @@ const service = (param: any) => {
         new Array(+random(3) < 2 ? 2 : 3),
         () => dataName[+random(dataName.length)]
       ).join('')
-    const data = Array.from(new Array(pageSize), (x, i) => nameFn()).map(
-      (name, i) => ({ name, checked: false, key: i, len: new Array(+random(20) + 1).fill('').map(v=> name).join(',') })
+    const data = Array.from(new Array(pageSize), () => nameFn()).map(
+      (name, i) => ({ name, checked: false, key: i, len: new Array(+random(20) + 1).fill('').map(v => name).join(',') })
     )
     arr.push(...data)
   }
   createData(serviceArr)
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         data: serviceArr.slice(pageSize * (pageNow - 1), pageSize * pageNow),
@@ -44,27 +44,27 @@ const colorChange = (t: any) => {
   >
     {t}
   </span>
-}
-const virtualTable = (props: any) => {
+};
+const VirtualTable = () => {
   // Usage
   const [columns, setColumns] = useState<any>([
     // 虚拟列表多选功能
     {
-      title: <></>,
+      title: '',
       width: 30,
       align: 'center',
-      render: (text: any, record: any, index: any) => <Checkbox
+      render: (text: any, record: any) => <Checkbox
         style={{ marginLeft: '6px' }}
         checked={selectedRowKeys.includes(record.key)}
         indeterminate={selectedRowKeys.includes(record.key)}
         onChange={(e) => {
           if (e.target.checked) {
-            rowSelection.selectedRowKeys.push(record.key);
+            selectedRowKeys.push(record.key);
           } else {
-            const i = rowSelection.selectedRowKeys.findIndex((v: any) => v === record.key);
-            rowSelection.selectedRowKeys.splice(i, 1)
+            const i = selectedRowKeys.findIndex((v: any) => v === record.key);
+            selectedRowKeys.splice(i, 1)
           }
-          rowSelection.onChange(rowSelection.selectedRowKeys)
+          setSelectedRowKeys(_.cloneDeep(rowSelection.selectedRowKeys))
         }}
       ></Checkbox>
     },
@@ -130,8 +130,7 @@ const virtualTable = (props: any) => {
     const plainOptions = columns.filter((v: any) => _.isString(v.title)).map((item: any) => item.title);
     const onChange = (e: Array<any>) => {
       columns.forEach((item: any) => {
-        if (!e.includes(item.title)) item.hidden = true;
-        else item.hidden = false;
+        item.hidden = !e.includes(item.title)
       })
       setColumns(_.cloneDeep([...columns]))
     }
@@ -156,7 +155,6 @@ const virtualTable = (props: any) => {
     <LhVirtualTable
       columns={columns}
       dataSource={data}
-      rowSelection={rowSelection}
       loading={loading}
       scroll={{ y: 300, x: '100vw' }}
       lh__scrollIndex={lh__scrollIndex}
@@ -170,4 +168,4 @@ const virtualTable = (props: any) => {
   </>
 }
 
-export default virtualTable
+export default VirtualTable

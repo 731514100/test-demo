@@ -1,7 +1,7 @@
 import { Table } from 'antd';
 import styles from './index.less'
 import ResizeObserver from 'rc-resize-observer';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { VariableSizeGrid as Grid } from 'react-window';
 // 获取可滚动节点的父级节点
@@ -15,7 +15,7 @@ const findNeedNode: any = (node: any, key: string = 'ant-table-body') => {
     return needNode;
   }
 }
-const getByteLen = (val:string) => {
+const getByteLen = (val: string) => {
   let len = 0;
   for (let i = 0; i < val.length; i++) {
     let a = val.charAt(i);
@@ -46,7 +46,7 @@ const LhVirtualTable = (props: any) => {
   const [oldDataSourceLen, setOldDataSourceLen] = useState<any>(0)
   const tableRef = useRef<any>(null)
   const _onScroll: any = (res: { scrollLeft: number, scrollTop: number }) => {
-    const { scrollLeft, scrollTop } = res;
+    const { scrollTop } = res;
     const dom = findNeedNode(tableRef.current, 'virtual-grid')?.flat(Infinity)[0];
     const clientHeight = dom?.children[0]?.clientHeight
     if (!clientHeight) return;
@@ -65,29 +65,6 @@ const LhVirtualTable = (props: any) => {
     lh__onScrollBottom({ ...lh__onScrollBottom, pageNum: pageNum + 1 });
   }
   // -----
-
-  // scroll定位
-  useEffect(() => {
-    scrollPosition(lh__scrollIndex)
-  }, [lh__scrollIndex])
-
-  const scrollPosition = (index: number) => {
-    console.log(index, 'i')
-    const dom = findNeedNode(tableRef.current, 'virtual-grid')?.flat(Infinity)[0];
-    gridRef.current.scrollToItem({ rowIndex: index });
-    const scrollDom = dom.children[0]
-    // gridRef.current.scrollTo({ scrollTop: 1200})
-    setTimeout(() => {
-      [...scrollDom.children].forEach((node: any, i: number) => {
-        node.style.background = 'transparent';
-        if (node?.id?.includes(`lh-${index}`)) {
-          node.style.background = 'rgba(10, 177, 205, .6)';
-        }
-      })
-    }, 0);
-  }
-  // -----
-
   // 表头添加与消失后兼容表内数据
   const [gridKey, setGridKey] = useState(0)
   const [mergedColumns, setMergedColumns] = useState([]);
@@ -164,8 +141,38 @@ const LhVirtualTable = (props: any) => {
 
   useEffect(() => resetVirtualGrid, [tableWidth]);
   // ------
+  
+  // scroll定位
 
-  const renderVirtualList = (rawData: object[], { scrollbarSize, ref, onScroll }: any) => {
+  const scrollPosition = (index: number) => {
+    const dom = findNeedNode(tableRef.current, 'virtual-grid')?.flat(Infinity)[0];
+    gridRef.current.scrollToItem({ rowIndex: index });
+    const scrollDom = dom.children[0]
+    // gridRef.current.scrollTo({ scrollTop: 1200})
+    setTimeout(() => {
+      console.log(scrollDom.children, 'scrollDom.children')
+      for (let i = 0; i < scrollDom.children.length; i++) {
+        const node = scrollDom.children[i];
+        node.style.background = 'transparent';
+        if (node?.id?.includes(`lh-${index}`)) {
+          node.style.background = 'rgba(10, 177, 205, .6)';
+        }
+      }
+      // scrollDom.children.forEach((node: any) => {
+      //   node.style.background = 'transparent';
+      //   if (node?.id?.includes(`lh-${index}`)) {
+      //     node.style.background = 'rgba(10, 177, 205, .6)';
+      //   }
+      // })
+    }, 0);
+  }
+  
+  useEffect(() => {
+    scrollPosition(lh__scrollIndex)
+  }, [lh__scrollIndex])
+  // -----
+
+  const renderVirtualList = useCallback((rawData: object[], { scrollbarSize, ref, onScroll }: any) => {
     ref.current = connectObject;
     const totalHeight = rawData.length * 54;
 
@@ -185,7 +192,7 @@ const LhVirtualTable = (props: any) => {
         rowCount={rawData.length}
         rowHeight={(index: number) => {
           const width = tableRef.current?.clientWidth;
-          const baseNumber = 24 * ((+(width > (1920 / 2)) +1))
+          const baseNumber = 24 * ((+(width > (1920 / 2)) + 1))
           const row = rawData[index];
           if (!row) return;
           const max = Object.values(row).reduce((pre, next) => {
@@ -219,13 +226,13 @@ const LhVirtualTable = (props: any) => {
           return (
             <div
               id={`lh-${rowIndex}-${columnIndex}`}
+              key={`lh-${rowIndex}-${columnIndex}`}
               className={['virtual-table-cell', columnIndex === mergedColumns.length - 1 ? 'virtual-table-cell-last' : ''].join(' ')}
               style={{ ...style, display: 'flex', alignItems: 'center' }}
               onContextMenu={(event) => {
                 event.stopPropagation();
                 event.preventDefault();
                 // onContextMenuTable?.(record, event);
-                console.log(event, record, 'am')
               }}
             >
               <div style={{ width: '100%', textAlign: column.align || 'left', lineHeight: '18px' }}>
@@ -238,7 +245,7 @@ const LhVirtualTable = (props: any) => {
         }}
       </Grid>
     );
-  };
+  }, [connectObject, mergedColumns]);
   return <>
     <ResizeObserver
       onResize={({ width }) => {
