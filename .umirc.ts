@@ -30,6 +30,11 @@ export default defineConfig({
       component: './ColouredRibbonAnimation',
     },
     {
+      name: 'antDesign虚拟列表',
+      path: '/antDesign',
+      component: './AntDesign/VirtualList',
+    },
+    {
       name: '权限演示',
       path: '/access',
       component: './Access',

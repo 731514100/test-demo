@@ -17,6 +17,8 @@
     "antd": "^4.20.7",
     "echarts": "^5.4.1",
     "lodash": "^4.17.21",
+    "rc-resize-observer": "^1.4.0",
+    "react-window": "^1.8.10",
     "wavesurfer.js": "^6.4.0"
   },
   "devDependencies": {
