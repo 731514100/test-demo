@@ -4,12 +4,9 @@ import ResizeObserver from 'rc-resize-observer';
 import React, { useEffect, useRef, useState } from 'react';
 // @ts-ignore
 import { VariableSizeGrid as Grid } from 'react-window';
-// @ts-ignore
-import _ from 'lodash';
 // 获取可滚动节点的父级节点
 const findNeedNode: any = (node: any, key: string = 'ant-table-body') => {
   if (node?.className === key) return node;
-  console.log(node?.children, 'node?.children')
   if (node?.children) {
     let needNode: any = [];
     [...node.children].forEach((child: any) => {
